@@ -63,7 +63,6 @@ checksums           rmd160  57b83bb12fe61eea9caa94557e57b24653837c51 \
 
 depends_build       port:pkgconfig \
                     port:gmake \
-                    port:ld64 \
                     port:texinfo
 
 depends_lib         port:lame \
