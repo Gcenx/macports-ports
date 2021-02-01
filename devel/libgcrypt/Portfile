@@ -62,9 +62,13 @@ use_parallel_build  yes
 
 post-patch {
     if {[variant_exists universal] && [variant_isset universal]} {
-        reinplace "s/@LIBGCRYPT_CONFIG_HOST@/${os.arch}-apple-darwin${os.major}/" ${worksrcpath}/src/libgcrypt-config.in
+        reinplace "s/@LIBGCRYPT_CONFIG_HOST@/${os.arch}-apple-darwin${os.major}/" ${worksrcpath}/src/libgcrypt-config.in \
+                                                                                  ${worksrcpath}/src/libgcrypt.pc.in
     }
 }
+
+set merger_host(x86_64) x86_64-apple-${os.platform}${os.major}
+set merger_host(i386)   i386-apple-${os.platform}${os.major}
 
 post-destroot {
     set docdir ${prefix}/share/doc/${name}
