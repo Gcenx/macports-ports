@@ -164,7 +164,10 @@ subport gstreamer1-gst-plugins-good {
         ${worksrcpath}/subprojects/gst-plugins-good
 
     depends_lib-append \
+        port:flack \
         port:${name}-gst-plugins-base \
+        port:lame \
+        path:lib/pkgconfig/vpx.pc:libvpx \
         port:mpg123
 
     # Feature options for plugins without external deps
@@ -180,12 +183,12 @@ subport gstreamer1-gst-plugins-good {
         -Ddirectsound=enabled \
         -Ddv=disabled \
         -Ddv1394=disabled \
-        -Dflac=disabled \
+        -Dflac=enabled \
         -Dgdk-pixbuf=disabled \
         -Dgtk3=disabled \
         -Djack=disabled \
         -Djpeg=disabled \
-        -Dlame=disabled \
+        -Dlame=enabled \
         -Dlibcaca=disabled \
         -Dmpg123=enabled \
         -Doss=disabled \
@@ -200,7 +203,7 @@ subport gstreamer1-gst-plugins-good {
         -Dspeex=disabled \
         -Dtaglib=disabled \
         -Dtwolame=disabled \
-        -Dvpx=disabled \
+        -Dvpx=enabled \
         -Dwaveform=disabled \
         -Dwavpack=disabled
 
