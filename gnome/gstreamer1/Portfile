@@ -164,7 +164,7 @@ subport gstreamer1-gst-plugins-good {
         ${worksrcpath}/subprojects/gst-plugins-good
 
     depends_lib-append \
-        port:flack \
+        port:flac \
         port:${name}-gst-plugins-base \
         port:lame \
         path:lib/pkgconfig/vpx.pc:libvpx \
