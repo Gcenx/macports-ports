@@ -196,14 +196,14 @@ if {${os.platform} ne "darwin" || (${os.major} >= 9 && ${os.major} <= 17)} {
     default_variants            +x11
 }
 
-configure.args.x86_64           --enable-win64
+configure.pre_args.x86_64       --enable-win64
 
 if {${build_arch} eq "x86_64" && ${os.major} < 18} {
     default_variants-append     +universal
 }
 
 if {${universal_possible} && [variant_isset universal]} {
-    configure.args.i386         --with-wine64=${workpath}/${worksrcdir}-x86_64
+    configure.pre_args.i386     --with-wine64=${workpath}/${worksrcdir}-x86_64
 } elseif {${universal_possible} && ![variant_isset universal]} {
     supported_archs             i386
 }
@@ -223,7 +223,7 @@ platform darwin {
         macosx_deployment_target 10.14
 
         # Build i386 & x86_64 PE binaries for WoW64
-        configure.args.x86_64-append    --enable-archs=i386,x86_64
+        configure.pre_args.x86_64-append    --enable-archs=i386,x86_64
 
         # When building for WoW64 the wine loader isn't renamed to wine64(-preloader)
         post-destroot {
@@ -238,8 +238,9 @@ platform darwin {
     if {${os.major} >= 16 && ${universal_possible} && [variant_isset universal]} {
         depends_lib-append                      port:MoltenVK
         if {"i386" in ${configure.universal_archs}} { depends_skip_archcheck-append MoltenVK }
-        configure.args.x86_64-append            --with-vulkan ac_cv_lib_soname_vulkan=
-        configure.args.i386-append              --without-vulkan
+        configure.args.i386-append              --without-Vulkan
+        configure.args.x86_64-append            --with-vulkan
+        configure.env.x86_64-append             ac_cv_lib_soname_vulkan=
     } else {
         configure.args-append   --without-vulkan
     }
