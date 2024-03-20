@@ -38,7 +38,7 @@ foreach stage {configure build destroot test} {
 }
 
 depends_build-append \
-    python${py_ver_nodot}
+    port:python${py_ver_nodot}
 
 subport ${name} {
     description \
