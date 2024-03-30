@@ -189,15 +189,16 @@ variant x11 {
                                 --x-lib=${prefix}/lib
 }
 
+# Build i386 & x86_64 PE binaries for expiremental WoW64
+if {${os.platform} ne "darwin" || ${os.major} > 18} {
+    configure.pre_args.x86_64-append    --enable-archs=i386,x86_64
+}
+
 if {${os.platform} ne "darwin" || (${os.major} >= 9 && ${os.major} <= 17)} {
-    default_variants            +x11
+    default_variants-append     +x11
 }
 
 configure.pre_args.x86_64       --enable-win64
-
-if {${build_arch} eq "x86_64" && ${os.major} < 18} {
-    default_variants-append     +universal
-}
 
 if {${universal_possible} && [variant_isset universal]} {
     configure.pre_args.i386     --with-wine64=${workpath}/${worksrcdir}-x86_64
@@ -218,9 +219,6 @@ platform darwin {
     if {${os.major} > 18} {
         # Avoid weird linker errors with Xcode 10 and later
         macosx_deployment_target 10.14
-
-        # Build i386 & x86_64 PE binaries for expiremental WoW64
-        configure.pre_args.x86_64-append    --enable-archs=i386,x86_64
     }
 
     # Vulkan is supported on macOS through MoltenVK since Wine 3.13, but because
@@ -280,6 +278,8 @@ variant usb description {Build ${subport} with USB support} {
 
 # macports-ports gstreamer1 ports are ancient
 #default_variants-append     +gstreamer
+
+default_variants            +universal
 
 triplet.add_build           cross
 
