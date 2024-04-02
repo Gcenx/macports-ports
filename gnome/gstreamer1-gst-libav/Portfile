@@ -34,7 +34,7 @@ depends_build-append \
                     port:pkgconfig \
                     port:python${py_ver_nodot}
 
-depends_lib-append  path:lib/libavcodec.dylib:ffmpeg \
+depends_lib-append  path:lib/pkgconfig/libavcodec.pc:ffmpeg \
                     port:gstreamer1-gst-plugins-base
 
 post-patch {
