@@ -143,6 +143,13 @@ platform macosx {
                     -Dgl=enabled
         configure.args-append \
                     -Dgl_winsys=cocoa
+
+        pre-activate {
+            if {![catch {set installed [lindex [registry_active gl-headers] 0]}]} {
+                registry_deactivate_composite gl-headers "" [list ports_nodepcheck 1]
+            }
+        }
+
     }
 }
 
