@@ -2,18 +2,23 @@
 
 PortSystem          1.0
 PortGroup           compiler_blacklist_versions 1.0
+PortGroup           gobject_introspection 1.0
 PortGroup           meson 1.0
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=636134
-PortGroup           muniversal 1.0
+PortGroup           muniversal 1.1
 
 name                gstreamer1-gst-plugins-base
 set my_name         gst-plugins-base
 # please only commit stable updates (even numbered releases)
 version             1.24.1
 revision            0
-description         This is gst-plugins, a set of plug-ins for GStreamer.
-long_description    ${description}
+description         GStreamer Base Plug-ins a basic collection of elements
+long_description    GStreamer Base Plug-ins is a well-groomed and well-maintained collection of \
+                    GStreamer plug-ins and elements, spanning the range of possible types of \
+                    elements one would want to write for GStreamer.  It also contains helper \
+                    libraries and base classes useful for writing elements. \
+                    A wide range of video and audio decoders, encoders, and filters are included.
 maintainers         nomaintainer
 categories          gnome
 license             LGPL-2+
@@ -35,8 +40,7 @@ depends_build-append \
                     port:pkgconfig \
                     port:python${py_ver_nodot}
 
-depends_lib-append  path:lib/pkgconfig/gobject-introspection-1.0.pc:gobject-introspection \
-                    port:graphene \
+depends_lib-append  port:graphene \
                     port:gstreamer1 \
                     path:include/turbojpeg.h:libjpeg-turbo \
                     port:libopus \
@@ -45,14 +49,14 @@ depends_lib-append  path:lib/pkgconfig/gobject-introspection-1.0.pc:gobject-intr
                     path:lib/pkgconfig/pango.pc:pango \
                     port:zlib
 
+gobject_introspection yes
+
 # Embedded systems are not our primary target, so disable OpenGL|ES support.
 configure.args-append \
                     -Dalsa=disabled \
                     -Dcdparanoia=disabled \
                     -Dexamples=disabled \
                     -Dgl=disabled \
-                    -Dgl-graphene=enabled \
-                    -Dintrospection=enabled \
                     -Dlibvisual=disabled \
                     -Dnls=disabled \
                     -Dogg=disabled \
@@ -62,9 +66,6 @@ configure.args-append \
                     -Dx11=disabled \
                     -Dxshm=disabled \
                     -Dxvideo=disabled
-
-# gstbasetextoverlay.c:1511: error: 'for' loop initial declaration used outside C99 mode
-configure.cflags-append -std=c99
 
 # gst-libs/gst/gl/gstgldebug.h:28: error: redefinition of typedef ‘GstGLAsyncDebug’
 compiler.blacklist-append *gcc-3.* *gcc-4.* {clang < 212}
