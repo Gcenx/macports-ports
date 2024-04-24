@@ -6,19 +6,17 @@ PortGroup           compiler_blacklist_versions 1.0
 PortGroup           meson 1.0
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=636134
-PortGroup           muniversal 1.0
+PortGroup           muniversal 1.1
 
 name                gstreamer1-gst-plugins-good
 set my_name         gst-plugins-good
 # please only commit stable updates (even numbered releases)
 version             1.24.1
 revision            0
-description         A set of good-quality plug-ins for GStreamer under GStreamer's preferred \
-                    license, LGPL.
-long_description    GStreamer Good Plug-ins is a set of plug-ins that GStreamer's developers \
-                    consider to have good quality code, correct functionality, and their \
-                    preferred license (LGPL for the plug-in code, LGPL or LGPL-compatible \
-                    for the supporting library).
+description         GStreamer Good Plug-ins a set of good-quality plug-ins under our preferred license, LGPL
+long_description    GStreamer Good Plug-ins is a set of plug-ins that we consider to have good \
+                    quality code and correct functionality, under our preferred license (LGPL for \
+                    the plug-in code, LGPL or LGPL-compatible for the supporting library).
 maintainers         nomaintainer
 categories          gnome
 license             LGPL-2+
@@ -87,8 +85,6 @@ configure.args-append   -Dexamples=disabled \
                         -Dqt5=disabled \
                         -Dgtk3=disabled
 
-configure.env-append    "HAVE_CXX=yes"
-
 # Fix libtool errors:
 # libtool: error: specify a tag with '--tag'
 compiler.blacklist-append \
@@ -153,7 +149,6 @@ variant qt description {Enable Qt5 MAC windowing elements } {
     # avoid:
     # ${prefix}/libexec/qt5/include/QtCore/qcompilerdetection.h:562:6: error: Qt requires a C++11 compiler and yours does not seem to be that.
     compiler.cxx_standard   2011
-    configure.cxxflags-append -std=c++11
 }
 
 default_variants            +pulseaudio +x11 +gtk3
