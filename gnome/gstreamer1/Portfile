@@ -86,6 +86,7 @@ compiler.blacklist-append \
                     *gcc-3.* *gcc-4.* {clang < 212}
 
 configure.args-append \
+                    -Dptp-helper-permissions=none \
                     -Dexamples=disabled \
                     -Dlibdw=disabled \
                     -Dlibunwind=disabled \
