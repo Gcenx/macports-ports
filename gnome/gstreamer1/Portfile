@@ -18,9 +18,16 @@ set my_name         gstreamer
 # please only commit stable updates (even numbered releases)
 version             1.24.1
 revision            0
-description         GStreamer is a library for constructing graphs of media-handling components.
-long_description    The applications it supports range from simple Ogg/Vorbis playback, audio/video \
-                    streaming to complex audio (mixing) and video (non-linear editing) processing.
+description         GStreamer is a streaming media framework
+long_description    {*}${description} that allows the construction of \
+                    graphs of elements which operate on media data. \
+                    Applications using this library can do anything from real-time sound processing \
+                    over playing video to capturing audio, video, and even other types of media \
+                    data. \
+                    Its architecture allows for adding new data types or processing capabilities \
+                    simply by installing new plug-ins. \
+                    GStreamer is the core module, containing libraries, headers, the basic object \
+                    hierarchy, and a set of media-agnostic core elements.
 maintainers         nomaintainer
 categories          gnome
 license             LGPL-2+
@@ -48,7 +55,6 @@ depends_lib-append  port:bison \
                     port:flex \
                     port:gettext-runtime \
                     path:lib/pkgconfig/glib-2.0.pc:glib2 \
-                    path:lib/pkgconfig/gobject-introspection-1.0.pc:gobject-introspection \
                     port:libxml2
 
 conflicts_build     check
