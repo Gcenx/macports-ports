@@ -4,18 +4,18 @@ PortSystem          1.0
 PortGroup           meson 1.0
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=636134
-PortGroup           muniversal 1.0
+PortGroup           muniversal 1.1
 
 name                gstreamer1-gst-plugins-ugly
 set my_name         gst-plugins-ugly
 # please only commit stable updates (even numbered releases)
 version             1.24.1
 revision            0
-description         A set of good-quality plug-ins for GStreamer that might pose distribution problems.
-long_description    GStreamer Ugly Plug-ins is a set of plug-ins that have good quality \
-                    and correct functionality, but distributing them might pose problems. \
-                    The license on either the plug-ins or the supporting libraries might not be \
-                    how we'd like. The code might be widely known to present patent problems.
+description         GStreamer Ugly Plug-ins a set of good-quality plug-ins with license or patent problems.
+long_description    GStreamer Ugly Plug-ins is a set of plug-ins that have good quality and correct \
+                    functionality, but distributing them might pose problems. The license on either \
+                    the plug-ins or the supporting libraries might not be how we'd like. The code \
+                    might be widely known to present patent problems.
 maintainers         nomaintainer
 categories          gnome
 homepage            https://gstreamer.freedesktop.org/modules/${my_name}.html
@@ -49,10 +49,6 @@ post-patch {
         ${worksrcpath}/scripts/extract-release-date-from-doap-file.py \
         ${worksrcpath}/scripts/dist-translations.py
 }
-
-configure.cflags-append \
-                    -funroll-loops \
-                    -fstrict-aliasing
 
 variant gpl description "Build plug-ins that have GPL-licensed dependencies" {
     configure.args-append \
