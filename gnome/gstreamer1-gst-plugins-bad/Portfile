@@ -53,7 +53,6 @@ depends_lib-append  port:aom \
                     port:libdvdnav \
                     port:libdvdread \
                     port:libexif \
-                    port:libGLU \
                     port:libgsm \
                     port:libmms \
                     port:libmodplug \
@@ -61,7 +60,6 @@ depends_lib-append  port:aom \
                     port:libnice \
                     path:lib/pkgconfig/librsvg-2.0.pc:librsvg \
                     port:libssh2 \
-                    port:mesa \
                     port:neon \
                     port:nettle \
                     port:openal-soft \
@@ -141,6 +139,7 @@ variant gpl description {Enable glp-licenced plugins} {
 
 # Window system is provided by gstreamer1-gst-plugins-base, so sync up.
 variant x11 {
+    depends_lib-append.     port:libGLU port:mesa
     require_active_variants port:gstreamer1-gst-plugins-base x11
     configure.args-append   -Dx11=enabled
 }
