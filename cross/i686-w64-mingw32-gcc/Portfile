@@ -50,6 +50,11 @@ configure.args-append \
 subport ${mingw_target}-gcc-bootstrap {
     build.target    all-gcc
     destroot.target install-gcc
+
+    # macports-clang-16 claims to auport -Wshadow=local but later shows issues
+    if {[string match macports-clang-* ${configure.compiler}]} {
+        configure.cflags-append -Wno-shadow
+    }
 }
 
 # Second bootstrapping phase
