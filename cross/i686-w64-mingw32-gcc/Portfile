@@ -51,7 +51,9 @@ subport ${mingw_target}-gcc-bootstrap {
     build.target    all-gcc
     destroot.target install-gcc
 
-    # macports-clang-16 claims to auport -Wshadow=local but later shows issues
+    # macports-clang-16 claims to support -Wshadow=local but later we see,
+    # warning: unknown warning option '-Wshadow=local'
+    # https://build.macports.org/builders/ports-10.9_x86_64-builder/builds/278979/steps/install-port/logs/stdio
     if {[string match macports-clang-* ${configure.compiler}]} {
         configure.cflags-append -Wno-shadow
     }
