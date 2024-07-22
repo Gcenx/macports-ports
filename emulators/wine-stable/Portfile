@@ -85,14 +85,6 @@ patchfiles-append \
 configure.install \
     ${worksrcpath}/tools/install-sh
 
-configure.pre_args.i386 \
-    --with-wine64=${workpath}/${worksrcdir}-x86_64 \
-    --without-vulkan
-
-configure.args.x86_64 \
-    --enable-win64 \
-    --with-vulkan
-
 configure.args \
     --disable-tests \
     --without-alsa \
@@ -128,11 +120,15 @@ configure.args \
     --without-wayland \
     --without-x
 
-if {${os.major} >= 19} {
-    configure.args.x86_64-append --enable-archs=i386,x86_64
-}
+configure.pre_args.i386 \
+    --with-wine64=${workpath}/${worksrcdir}-x86_64 \
+    --without-vulkan
 
-configure.env.x86_64-append ac_cv_lib_soname_vulkan=
+configure.args.x86_64 \
+    --enable-win64 \
+    --with-vulkan
+
+configure.env-append        ac_cv_lib_soname_vulkan=
 
 # We need to tell the linker to add MacPorts to the rpath stack.
 configure.ldflags-append    -Wl,-rpath,${compiler.library_path}
@@ -141,10 +137,21 @@ configure.ldflags-append    -Wl,-rpath,${compiler.library_path}
 # FSF GCC cannot compile code using Apple's "blocks" language extensions
 compiler.blacklist-append   {*gcc*} {clang < 800} {macports-clang-3.*}
 
-# Setting an older deployment target avoids build error with MacOSX15.sdk
-# https://gitlab.winehq.org/wine/wine/-/merge_requests/5935#note_74758
-if {${os.major} >= 19} {
+if {${os.major} > 18} {
+    # New wow64 obly works on macOS Catalina and later.
+    configure.args.x86_64-append --enable-archs=i386,x86_64
+
+    # Setting an older deployment target avoids build error with MacOSX15.sdk
+    # https://gitlab.winehq.org/wine/wine/-/merge_requests/5935#note_74758
     macosx_deployment_target    10.15
+} else {
+    # 32-bit wine is only tested against MacOSX10.13.sdk
+    configure.sdk_version       10.13
+    if {${configure.sdkroot} != "${developer_dir}/SDKs/MacOSX${configure.sdk_version}.sdk"} {
+        pre-fetch {
+            error "Building ${name} requires the MacOSX${configure.sdk_version}.sdk to be present in ${developer_dir}/SDKs/"
+        }
+    }
 }
 
 # Makes destroot take significantly longer
@@ -169,7 +176,7 @@ variant kerberos description "Build ${subport} with Kerberos, for network authen
     configure.args-replace  --without-krb5 --with-krb5
 }
 
-if {${os.major} >= 19} {
+if {${os.major} > 18} {
     default_variants        +gstreamer
 } else {
     default_variants        +universal
@@ -207,6 +214,22 @@ pre-activate {
         ui_error "You must first update to macOS 10.15.4."
         return -code error "You must first update to macOS 10.15.4."
     }
+}
+
+if {[option universal_possible] && [variant_isset universal]} {
+    notes-append "
+        \n
+        Wine supports both 32-bit and 64-bit now. It is compatible with your\
+        existing 32-bit wine prefix, but it will now default to 64-bit when you\
+        create a new wine prefix. The architecture can be selected using the\
+        WINEARCH environment variable which can be set to either \"win32\" or\
+        \"win64\".
+
+        To create a new pure 32-bit prefix, you can run:
+            \$ WINEARCH=win32 WINEPREFIX=~/.wine32 winecfg
+
+        See the Wine FAQ for details: https://wiki.winehq.org/FAQ#Wineprefixes
+    "
 }
 
 livecheck.url               ${homepage}
