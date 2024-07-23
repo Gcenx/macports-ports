@@ -79,6 +79,12 @@ patchfiles-append \
 patchfiles-append \
     5871.diff
 
+pre-patch {
+    # https://gitlab.winehq.org/wine/wine/-/commit/c7a97b5d5d56ef00a0061b75412c6e0e489fdc99
+    reinplace -q "/PKG_CONFIG_LIBDIR/d"     ${worksrcpath}/configure
+    reinplace -q "/PKG_CONFIG_LIBDIR/d"     ${worksrcpath}/configure.ac
+}
+
 # wine requires the program specified in INSTALL to create intermediate
 # directories; /usr/bin/install doesn't.
 # http://bugs.winehq.org/show_bug.cgi?id=35310
