@@ -13,7 +13,7 @@ name                        wine-stable
 conflicts                   wine-devel wine-staging wine-crossover
 set my_name                 wine
 revision                    1
-# macOS Mojave default SDK doesn't support i386, new wow64 also doesn't work.
+# macOS Mojave default SDK doesn't support i386.
 platforms                   {darwin >= 16 != 18}
 set branch                  [lindex [split ${version} .] 0].0
 license                     LGPL-2.1+
