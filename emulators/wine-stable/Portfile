@@ -44,7 +44,6 @@ depends_build \
     port:bison \
     bin:flex:flex \
     port:gettext \
-    port:mingw-w64 \
     path:bin/pkg-config:pkgconfig
 
 depends_lib \
@@ -135,7 +134,7 @@ configure.ldflags-append    -Wl,-rpath,${compiler.library_path}
 
 # wine requires clang >= 3.8
 # FSF GCC cannot compile code using Apple's "blocks" language extensions
-compiler.blacklist-append   {*gcc*} {clang < 800} {macports-clang-3.*}
+compiler.blacklist-append   {*gcc*} {clang < 800} {macports-clang-3.*} clang
 
 if {${os.major} > 18} {
     # New wow64 obly works on macOS Catalina and later.
