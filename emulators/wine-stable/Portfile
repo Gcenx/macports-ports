@@ -119,17 +119,15 @@ configure.args \
     --with-unwind \
     --without-usb \
     --without-v4l2 \
+    --without-vulkan \
     --without-wayland \
     --without-x
 
 configure.args.i386 \
-    --with-wine64=${workpath}/${worksrcdir}-x86_64 \
-    --without-vulkan
+    --with-wine64=${workpath}/${worksrcdir}-x86_64
 
 configure.args.x86_64 \
     --enable-win64
-
-configure.env-append        ac_cv_lib_soname_vulkan=
 
 # We need to tell the linker to add MacPorts to the rpath stack.
 configure.ldflags-append    -Wl,-rpath,${compiler.library_path}
@@ -140,17 +138,14 @@ compiler.blacklist-append   {*gcc*} {clang < 800} {macports-clang-3.*}
 
 if {${os.major} > 18} {
     depends_lib-append      path:lib/libMoltenVK.dylib:MoltenVK-latest
-    configure.args.x86_64-append --with-vulkan
-
-    # New wow64 obly works on macOS Catalina and later.
+    configure.args-replace  --without-vulkan --with-vulkan
+    configure.env-append    ac_cv_lib_soname_vulkan=
     configure.args.x86_64-append --enable-archs=i386,x86_64
 
     # Setting an older deployment target avoids build error with MacOSX15.sdk
     # https://gitlab.winehq.org/wine/wine/-/merge_requests/5935#note_74758
     macosx_deployment_target    10.15
 } else {
-    configure.args.x86_64-append --without-vulkan
-
     # 32-bit wine is only tested against MacOSX10.13.sdk
     configure.sdk_version       10.13
     if {${configure.sdkroot} != "${developer_dir}/SDKs/MacOSX${configure.sdk_version}.sdk"} {
