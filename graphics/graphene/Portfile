@@ -10,7 +10,6 @@ revision            1
 license             Permissive
 categories          graphics gnome
 maintainers         {devans @dbevans} openmaintainer
-platforms           darwin
 homepage            https://ebassi.github.io/${name}/
 
 description         A thin layer of graphic data types
@@ -24,7 +23,8 @@ checksums           rmd160  2b9dca9f0e0926b5037961843f7874701144c6cb \
 depends_build       port:pkgconfig \
                     port:python311
 
-depends_lib         path:lib/pkgconfig/glib-2.0.pc:glib2 \
+depends_lib         port:gettext \
+                    path:lib/pkgconfig/glib-2.0.pc:glib2 \
                     path:lib/pkgconfig/gobject-introspection-1.0.pc:gobject-introspection
 
 patchfiles-append   use-our-python3.patch
