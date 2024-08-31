@@ -10,7 +10,6 @@ revision            2
 license             Permissive
 categories          graphics gnome
 maintainers         {devans @dbevans} openmaintainer
-platforms           darwin
 supported_archs     arm64 i386 ppc ppc64 x86_64
 homepage            https://ebassi.github.io/${name}/
 
@@ -23,7 +22,7 @@ checksums           rmd160  2b9dca9f0e0926b5037961843f7874701144c6cb \
                     size    178553
 
 depends_build       port:pkgconfig \
-                    port:python312
+                    port:python311
 
 depends_lib         path:lib/pkgconfig/glib-2.0.pc:glib2 \
                     path:lib/pkgconfig/gobject-introspection-1.0.pc:gobject-introspection
@@ -31,7 +30,7 @@ depends_lib         path:lib/pkgconfig/glib-2.0.pc:glib2 \
 patchfiles-append   use-our-python3.patch
 
 post-patch {
-    reinplace -W ${worksrcpath} "s|@@PYTHON3_BIN@@|${prefix}/bin/python3.12|" \
+    reinplace -W ${worksrcpath} "s|@@PYTHON3_BIN@@|${prefix}/bin/python3.11|" \
             src/meson.build
 }
 
