@@ -64,8 +64,8 @@ variant tests description "support running tests" {
 }
 
 # gobject-introspection uses g-ir-scanner, which uses $CC from env
-muniversal.arch_compiler    yes
+#muniversal.arch_compiler    yes
 
 foreach stage {configure build destroot test} {
-    ${stage}.env-append     CC=${configure.cc}
+    ${stage}.env-append     "CC=${configure.cc} -arch ${arch}"
 }
