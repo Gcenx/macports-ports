@@ -3,14 +3,15 @@
 PortSystem          1.0
 PortGroup           github 1.0
 PortGroup           meson 1.0
-PortGroup           muniversal 1.0
+PortGroup           muniversal 1.1
 
 github.setup        ebassi graphene 1.10.8
-revision            1
+revision            2
 license             Permissive
 categories          graphics gnome
 maintainers         {devans @dbevans} openmaintainer
 platforms           darwin
+supported_archs     arm64 i386 ppc ppc64 x86_64
 homepage            https://ebassi.github.io/${name}/
 
 description         A thin layer of graphic data types
@@ -22,7 +23,7 @@ checksums           rmd160  2b9dca9f0e0926b5037961843f7874701144c6cb \
                     size    178553
 
 depends_build       port:pkgconfig \
-                    port:python311
+                    port:python312
 
 depends_lib         path:lib/pkgconfig/glib-2.0.pc:glib2 \
                     path:lib/pkgconfig/gobject-introspection-1.0.pc:gobject-introspection
@@ -30,7 +31,7 @@ depends_lib         path:lib/pkgconfig/glib-2.0.pc:glib2 \
 patchfiles-append   use-our-python3.patch
 
 post-patch {
-    reinplace -W ${worksrcpath} "s|@@PYTHON3_BIN@@|${prefix}/bin/python3.11|" \
+    reinplace -W ${worksrcpath} "s|@@PYTHON3_BIN@@|${prefix}/bin/python3.12|" \
             src/meson.build
 }
 
@@ -63,24 +64,5 @@ variant tests description "support running tests" {
                             -Dinstalled_tests=false -Dinstalled_tests=true
 }
 
-# the original motivation for this somewhat unusual pattern of supported_archs being set
-# was here: https://github.com/macports/macports-ports/pull/2095#issuecomment-401559487
-
-if {${configure.build_arch} eq "arm64"} {
-    supported_archs     arm64
-} elseif {${configure.build_arch} eq "i386" || ${configure.build_arch} eq "x86_64"} {
-    supported_archs     i386 x86_64
-} else {
-    supported_archs     ppc ppc64
-}
-
 # gobject-introspection uses g-ir-scanner, which uses $CC from env
-if {${universal_possible} && [variant_isset universal]} {
-    foreach arch ${configure.universal_archs} {
-        lappend merger_build_env(${arch})  "CC=${configure.cc} -arch ${arch}"
-        lappend merger_destroot_env(${arch})  "CC=${configure.cc} -arch ${arch}"
-    }
-} else {
-    build.env-append       "CC=${configure.cc} ${configure.cc_archflags}"
-    destroot.env-append    "CC=${configure.cc} ${configure.cc_archflags}"
-}
+muniversal.arch_compiler    yes
