@@ -67,7 +67,7 @@ variant tests description "support running tests" {
 # was here: https://github.com/macports/macports-ports/pull/2095#issuecomment-401559487
 
 if {${configure.build_arch} eq "arm64"} {
-    supported_archs     arm64
+    supported_archs     arm64 x86_64
 } elseif {${configure.build_arch} eq "i386" || ${configure.build_arch} eq "x86_64"} {
     supported_archs     i386 x86_64
 } else {
