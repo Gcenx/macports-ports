@@ -67,5 +67,5 @@ variant tests description "support running tests" {
 #muniversal.arch_compiler    yes
 
 foreach stage {configure build destroot test} {
-    ${stage}.env-append     "CC=${configure.cc} -arch ${arch}"
+    ${stage}.env-append     "CC=${configure.cc} ${configure.cc_archflags}"
 }
