@@ -102,9 +102,9 @@ array set crossbinutils.versions_info {
         size    28175768
     }}
     2.43.1 {xz {
-        rmd160  1aecf0d749c7eb0941f7e1f0be0006d8a8833dd8 \
-        sha256  f6e4d41fd5fc778b06b7891457b3620da5ecea1006c6a4a41ae998109f85a800 \
-        size    27567160
+        rmd160  6f8ed9d308d81752726f80939826621ed441d11b \
+        sha256  13f74202a3c4c51118b797a39ea4200d3f6cfbe224da6d1d95bb938480132dfd \
+        size    28174300
     }}
 }
 
