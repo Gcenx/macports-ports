@@ -10,7 +10,6 @@ revision            1
 license             Permissive
 categories          graphics gnome
 maintainers         {devans @dbevans} openmaintainer
-supported_archs     arm64 i386 ppc ppc64 x86_64
 homepage            https://ebassi.github.io/${name}/
 
 description         A thin layer of graphic data types
