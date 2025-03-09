@@ -22,13 +22,13 @@ checksums                   rmd160  fd1cd0d82b4e0f8e013a67cc27802616535709fd \
                             size    77857
 
 depends_lib \
-    libsdl2 \
-    libsdl2_net \
-    libpng \
-    glew \
-    libzip \
-    nlohmann-json \
-    tinyxml2 \
-    libogg \ 
-    opusfile \
-    libvorbis
+    port:libsdl2 \
+    port:libsdl2_net \
+    port:libpng \
+    port:glew \
+    port:libzip \
+    port:nlohmann-json \
+    port:tinyxml2 \
+    port:libogg \ 
+    port:opusfile \
+    port:libvorbis
