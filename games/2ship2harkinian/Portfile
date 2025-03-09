@@ -25,5 +25,5 @@ post-fetch {
     # Clone the submodule libultraship
     system -W ${worksrcpath} "git submodule update --init"
 }
-depends_build-append port:sdl2 port:libpng port:glew port:nlohmann-json port:libzip
+depends_build-append port:libsdl2 port:libpng port:glew port:nlohmann-json port:libzip
 depends_lib-append port:libsdl2 port:libsdl2_net port:libpng port:glew port:libzip port:nlohmann-json port:tinyxml2 port:libogg port:opusfile port:libvorbis
