@@ -21,7 +21,7 @@ checksums                   rmd160  fd1cd0d82b4e0f8e013a67cc27802616535709fd \
                             sha256  120398ff95336d04f3ce7ac820e0490059625976264100dcc9af9d11e992b0ca \
                             size    77857
 
-depends_lib \
+depends_lib-append \
     port:libsdl2 \
     port:libsdl2_net \
     port:libpng \
