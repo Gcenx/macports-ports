@@ -29,5 +29,5 @@ post-fetch {
 depends_lib-append port:libsdl2 port:libsdl2_net port:libpng port:glew port:libzip port:nlohmann-json port:tinyxml2 port:libogg port:opusfile port:libvorbis
 
 pre-build {
-    system -W ${worksrcpath} "cmake --build --target Generate2ShipOtr"
+    system -W ${worksrcpath} "cmake --target Generate2ShipOtr"
 }
