@@ -6,7 +6,6 @@ PortGroup                   github 1.0
 PortGroup                   muniversal 1.1
 
 github.setup                HarbourMasters 2ship2harkinian 1.1.2
-#github.tarball_from         archive
 fetch.type                  git
 
 categories                  games
@@ -23,9 +22,12 @@ checksums                   rmd160  b6dbac573269ae94af1e75f61b760c805a4bfe81 \
                             size    6394385
 
 post-fetch {
-    # This will be removed once the python re-write is complete.
-    #system -W ${worksrcpath} "patch -p0 < [shellescape ${filespath}/gitmodules.patch]"
+    # Clone the submodule libultraship
     system -W ${worksrcpath} "git submodule update --init"
 }
 
 depends_lib-append port:libsdl2 port:libsdl2_net port:libpng port:glew port:libzip port:nlohmann-json port:tinyxml2 port:libogg port:opusfile port:libvorbis
+
+pre-build {
+    cmake --build build-cmake --target Generate2ShipOtr
+}
