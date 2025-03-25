@@ -48,7 +48,7 @@ post-fetch {
 #configure.args-delete -alltargets
 
 configure {
-    system "${worksrcpath}/cerbero-uninstalled -c config/cross-macos-x86-64.cbc bootstrap"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -c config/cross-macos-x86-64.cbc bootstrap"
 }
 
 build.pre_args
