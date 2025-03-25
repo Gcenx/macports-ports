@@ -1,0 +1,38 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        GStreamer cerbero 1.26.0
+revision            0
+
+name                gstreamer.framework
+categories          multimedia
+maintainers         {@Gcenx}
+description         GStreamer is a streaming media framework
+long_description    {*}${description}
+supported_archs     arm64 x86_64
+platforms           {darwin >= 17}
+license             LGPL-2+
+homepage            https://gstreamer.freedesktop.org
+
+fetch.type          git
+
+post-fetch {
+    system -W ${worksrcpath} "git submodule --init --recursive"
+}
+
+#configure.dir
+configure.cmd ${worksrcpath}/cerbero-uninstalled
+
+configure.args -c config/cross-macos-x86-64.cbc bootstrap
+
+#configure {
+#    system -W ${worksrcpath} "cerbero-uninstalled -c config/cross-macos-x86-64.cbc bootstrap"
+#}
+
+build.cmd ${worksrcpath}/cerbero-uninstalled
+build.args -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc package gstreamer-1.0
+
+#build {}
+#destroot {}
