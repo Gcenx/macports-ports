@@ -31,6 +31,10 @@ configure.install
 
 fetch.type          git
 
+xcode.configuration
+xcode.target
+#xcode.scheme      
+
 post-fetch {
     system -W ${worksrcpath} "git submodule update --init --recursive"
 }
