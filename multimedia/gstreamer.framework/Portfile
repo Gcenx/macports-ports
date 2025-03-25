@@ -17,6 +17,18 @@ platforms           {darwin >= 17}
 license             LGPL-2+
 homepage            https://gstreamer.freedesktop.org
 
+# Some of MacPorts' default flags don't play well when we're building MacPorts
+# itself; nuke them.
+configure.cppflags
+configure.ldflags
+configure.cc_archflags
+configure.objc_archflags
+configure.ld_archflags
+compiler.cpath
+compiler.library_path
+configure.cxx_stdlib
+configure.install
+
 fetch.type          git
 
 post-fetch {
