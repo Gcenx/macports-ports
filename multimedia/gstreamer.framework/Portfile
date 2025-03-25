@@ -47,6 +47,11 @@ post-fetch {
 #configure.args -c config/cross-macos-x86-64.cbc bootstrap
 #configure.args-delete -alltargets
 
+# Avoding gi, rust, python in bootstrap
+pre-configure {
+    reinplace -q "/variants.override/d"  ${worksrcpath}/config/darwin.config
+}
+
 configure {
     system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -c config/cross-macos-x86-64.cbc bootstrap"
 }
