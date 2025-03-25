@@ -18,7 +18,7 @@ license             LGPL-2+
 homepage            https://gstreamer.freedesktop.org
 
 depends_build \
-port:m4 port:autoconf port:gettext-m4 port:automake port:libtool port:meson port:ninja port:pkg-config port:orc port:sed port:gperf port:bison port:flex port:moltenvk-tools port:cmake port:nasm
+port:m4 port:autoconf port:automake port:libtool port:meson port:ninja path:bin/pkg-config:pkgconfig port:orc port:gperf port:bison port:flex port:cmake port:nasm
 
 # Some of MacPorts' default flags don't play well when we're building MacPorts
 # itself; nuke them.
