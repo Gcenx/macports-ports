@@ -42,16 +42,21 @@ post-fetch {
     system -W ${worksrcpath} "git submodule update --init --recursive"
 }
 
-configure.cmd ${worksrcpath}/cerbero-uninstalled
+#configure.cmd ${worksrcpath}/cerbero-uninstalled
+#configure.pre_args
+#configure.args -c config/cross-macos-x86-64.cbc bootstrap
+#configure.args-delete -alltargets
 
-configure.pre_args
-configure.args -c config/cross-macos-x86-64.cbc bootstrap
-configure.args-delete -alltargets
+configure {
+    system -W ${worksrcpath} "cerbero-uninstalled -c config/cross-macos-x86-64.cbc bootstrap"
+}
 
+build.pre_args
 build.cmd ${worksrcpath}/cerbero-uninstalled
 build.args -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc build gstreamer-1.0
 build.args-delete -alltargets
 
+destroot.pre_args
 destroot.cmd ${worksrcpath}/cerbero-uninstalled
 destroot.args -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc package gstreamer-1.0
 destroot.args-delete -alltargets
