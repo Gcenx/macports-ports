@@ -2,6 +2,7 @@
 
 PortSystem          1.0
 PortGroup           github 1.0
+PortGroup           xcode 1.0
 
 github.setup        GStreamer cerbero 1.26.0
 revision            0
