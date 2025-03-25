@@ -35,6 +35,9 @@ xcode.configuration
 xcode.target
 #xcode.scheme      
 
+build.target
+destroot.target
+
 post-fetch {
     system -W ${worksrcpath} "git submodule update --init --recursive"
 }
