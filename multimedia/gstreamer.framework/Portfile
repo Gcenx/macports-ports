@@ -44,11 +44,10 @@ pre-configure {
 }
 
 configure {
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled bootstrap"
+#    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled bootstrap"
 }
 
 build {
-break
     system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled build gstreamer-1.0"
 }
 
