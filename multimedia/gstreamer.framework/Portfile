@@ -17,8 +17,8 @@ platforms           {darwin >= 17}
 license             LGPL-2+
 homepage            https://gstreamer.freedesktop.org
 
-depends_build \
-port:m4 port:autoconf port:automake port:libtool port:meson port:ninja path:bin/pkg-config:pkgconfig port:orc port:gperf port:bison port:flex port:cmake port:nasm
+#depends_build \
+#port:m4 port:autoconf port:automake port:libtool port:meson port:ninja path:bin/pkg-config:pkgconfig port:orc port:gperf port:bison port:flex port:cmake port:nasm
 
 # Some of MacPorts' default flags don't play well when we're building MacPorts
 # itself; nuke them.
@@ -44,7 +44,7 @@ pre-configure {
 }
 
 configure {
-#    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled bootstrap"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled bootstrap"
 }
 
 build {
