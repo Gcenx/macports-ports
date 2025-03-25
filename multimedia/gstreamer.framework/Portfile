@@ -19,7 +19,7 @@ homepage            https://gstreamer.freedesktop.org
 fetch.type          git
 
 post-fetch {
-    system -W ${worksrcpath} "git submodule --init --recursive"
+    system -W ${worksrcpath} "git submodule update --init --recursive"
 }
 
 #configure.dir
