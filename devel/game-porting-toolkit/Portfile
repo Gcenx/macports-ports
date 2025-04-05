@@ -106,7 +106,7 @@ configure.args \
     --without-gstreamer \
     --without-inotify \
     --without-krb5 \
-    --with-mingw \
+    --without-mingw \
     --without-netapi \
     --without-openal \
     --with-opencl \
@@ -172,12 +172,13 @@ destroot.target             install-lib
 
 configure {
     set configure.dir ${worksrcpath}-x86_64
+    configure.args ${configure.args} CROSSCC=/usr/bin/clang
     portconfigure::configure_main
 
     configure.args.x86_64
     set configure.dir ${worksrcpath}-i386
     configure.args-delete --enable-win64
-    configure.args ${configure.pre_args.i386} ${configure.args} ${configure.args.i386}
+    configure.args ${configure.pre_args.i386} ${configure.args} ${configure.args.i386} CROSSCC=/usr/bin/clang
     portconfigure::configure_main
 }
 
