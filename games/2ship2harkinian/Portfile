@@ -21,9 +21,7 @@ checksums                   rmd160  b6dbac573269ae94af1e75f61b760c805a4bfe81 \
                             sha256  8483e0a0ec58f4f80b020a2606f90655276a7c948aefd9d7866e441e9cc30fce \
                             size    6394385
 
-extract.asroot              yes
-
-post-extract {
+post-fetch {
     # Clone the submodule libultraship
     system -W ${worksrcpath} "git submodule update --init"
 }
