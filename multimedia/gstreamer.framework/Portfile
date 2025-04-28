@@ -18,6 +18,7 @@ license             LGPL-2+
 homepage            https://gstreamer.freedesktop.org
 
 fetch.type          git
+use_configure       no
 
 post-fetch {
     system -W ${worksrcpath} "git submodule update --init"
@@ -25,8 +26,6 @@ post-fetch {
     system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled fetch-bootstrap"
     system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled fetch"
 }
-
-configure {}
 
 build {
     system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled bootstrap --offline"
