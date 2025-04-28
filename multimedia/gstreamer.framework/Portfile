@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           github 1.0
 PortGroup           xcode 1.0
 
-github.setup        GStreamer cerbero 1.26.0
+github.setup        GStreamer cerbero 1.26.1
 revision            0
 
 name                gstreamer.framework
@@ -12,7 +12,7 @@ categories          multimedia
 maintainers         {@Gcenx}
 description         GStreamer is a streaming media framework
 long_description    {*}${description}
-supported_archs     arm64 x86_64
+supported_archs     x86_64
 platforms           {darwin >= 17}
 license             LGPL-2+
 homepage            https://gstreamer.freedesktop.org
@@ -23,20 +23,16 @@ use_configure       no
 post-fetch {
     system -W ${worksrcpath} "git submodule update --init"
     reinplace -q "/variants.override/d"  ${worksrcpath}/config/darwin.config
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled fetch-bootstrap"
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled fetch"
-}
-
-pre-build {
-    reinplace -q "/variants.override/d"  ${worksrcpath}/config/darwin.config
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc fetch-bootstrap"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc fetch"
 }
 
 build {
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled bootstrap --offline"
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled build-deps --offline"
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled build --offline gstreamer-1.0"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc bootstrap --offline"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc build-deps --offline"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc build --offline gstreamer-1.0"
 }
 
 destroot {
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled package --offline gstreamer-1.0"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc package --offline gstreamer-1.0"
 }
