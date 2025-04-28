@@ -27,6 +27,10 @@ post-fetch {
     system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled fetch"
 }
 
+pre-build {
+    reinplace -q "/variants.override/d"  ${worksrcpath}/config/darwin.config
+}
+
 build {
     system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled bootstrap --offline"
     system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled build-deps --offline"
