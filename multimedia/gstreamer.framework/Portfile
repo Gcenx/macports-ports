@@ -17,40 +17,23 @@ platforms           {darwin >= 17}
 license             LGPL-2+
 homepage            https://gstreamer.freedesktop.org
 
-#depends_build \
-#port:m4 port:autoconf port:automake port:libtool port:meson port:ninja path:bin/pkg-config:pkgconfig port:orc port:gperf port:bison port:flex port:cmake port:nasm
-
-# Some of MacPorts' default flags don't play well when we're building MacPorts
-# itself; nuke them.
-configure.cppflags
-configure.ldflags
-configure.cc_archflags
-configure.objc_archflags
-configure.ld_archflags
-compiler.cpath
-compiler.library_path
-configure.cxx_stdlib
-configure.install
-
 fetch.type          git
 
 post-fetch {
-    system -W ${worksrcpath} "git submodule update --init --recursive"
-}
-
-# Avoding gi, rust, python in bootstrap
-pre-configure {
+    system -W ${worksrcpath} "git submodule update --init"
     reinplace -q "/variants.override/d"  ${worksrcpath}/config/darwin.config
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled fetch-bootstrap"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled fetch"
 }
 
-configure {
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled bootstrap"
-}
+configure {}
 
 build {
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled build gstreamer-1.0"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled bootstrap --offline"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled build-deps --offline"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled build --offline gstreamer-1.0"
 }
 
 destroot {
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled package gstreamer-1.0"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled package --offline gstreamer-1.0"
 }
