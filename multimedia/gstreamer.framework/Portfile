@@ -21,18 +21,18 @@ fetch.type          git
 use_configure       no
 
 post-fetch {
-    system -W ${worksrcpath} "git submodule update --init"
     reinplace -q "/variants.override/d"  ${worksrcpath}/config/darwin.config
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc fetch-bootstrap"
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc fetch"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc fetch-bootstrap "
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc fetch-package gstreamer-1.0 --deps"
 }
 
+set packages "gstreamer-1.0 gst-plugins-base-1.0 gst-plugins-good-1.0 gst-plugins-bad-1.0 gst-plugins-ugly-1.0 gst-rtsp-server-1.0 gst-devtools-1.0 gst-editing-services-1.0 libnice gst-libav-1.0"
+
 build {
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc bootstrap --offline"
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc build-deps --offline"
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc build --offline gstreamer-1.0"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc bootstrap --offline --jobs ${build.jobs}"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc build-deps ${packages} --offline --jobs ${build.jobs}"
 }
 
 destroot {
-    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc package --offline gstreamer-1.0"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -v nogi,norust,nopython -c config/cross-macos-x86-64.cbc package gstreamer-1.0 --offline --jobs ${build.jobs}"
 }
