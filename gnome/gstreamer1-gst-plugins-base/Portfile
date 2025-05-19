@@ -11,7 +11,7 @@ name                gstreamer1-gst-plugins-base
 set my_name         gst-plugins-base
 # please only commit stable updates (even numbered releases)
 version             1.24.9
-revision            0
+revision            1
 description         This is gst-plugins, a set of plug-ins for GStreamer.
 long_description    ${description}
 maintainers         nomaintainer
@@ -36,7 +36,6 @@ depends_build-append \
                     port:python${py_ver_nodot}
 
 depends_lib-append  path:lib/pkgconfig/gobject-introspection-1.0.pc:gobject-introspection \
-                    port:graphene \
                     port:gstreamer1 \
                     path:include/turbojpeg.h:libjpeg-turbo \
                     port:libopus \
@@ -51,7 +50,6 @@ configure.args-append \
                     -Dcdparanoia=disabled \
                     -Dexamples=disabled \
                     -Dgl=disabled \
-                    -Dgl-graphene=enabled \
                     -Dintrospection=enabled \
                     -Dlibvisual=disabled \
                     -Dnls=disabled \
