@@ -1,0 +1,38 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           xcode 1.0
+
+github.setup        GStreamer cerbero 1.26.1
+revision            0
+
+name                gstreamer.framework
+categories          multimedia
+maintainers         {@Gcenx}
+description         GStreamer is a streaming media framework
+long_description    {*}${description}
+supported_archs     x86_64
+platforms           {darwin >= 17}
+license             LGPL-2+
+homepage            https://gstreamer.freedesktop.org
+
+fetch.type          git
+use_configure       no
+
+post-fetch {
+    reinplace -q "/variants.override/d"  ${worksrcpath}/config/darwin.config
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -c config/cross-macos-x86-64.cbc fetch-bootstrap"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -c config/cross-macos-x86-64.cbc fetch-package --deps gstreamer-1.0"
+}
+
+set packages "gstreamer-1.0 gst-plugins-base-1.0 gst-plugins-good-1.0 gst-plugins-bad-1.0 gst-plugins-ugly-1.0 gst-rtsp-server-1.0 gst-devtools-1.0 gst-editing-services-1.0 libnice gst-libav-1.0"
+
+build {
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -c config/cross-macos-x86-64.cbc bootstrap --jobs ${build.jobs} --offline"
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -c config/cross-macos-x86-64.cbc build-deps --jobs ${build.jobs} --offline ${packages}"
+}
+
+destroot {
+    system -W ${worksrcpath} "${worksrcpath}/cerbero-uninstalled -c config/cross-macos-x86-64.cbc package --jobs ${build.jobs} --offline gstreamer-1.0"
+}
